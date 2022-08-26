@@ -19,3 +19,4 @@ int run_tests(const std::string& library);
 * Test functions
 *********************************************************************/
 void run_tests_PrimaryGrid();
+void run_tests_DualGrid();

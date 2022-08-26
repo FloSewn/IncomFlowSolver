@@ -33,17 +33,16 @@ public:
   /*------------------------------------------------------------------
   | Setters 
   ------------------------------------------------------------------*/
-  void dummy(double s)  
+  inline void dummy(double s)  
   { dummy_ = s; }
-
 
   /*------------------------------------------------------------------
   | Getters 
   ------------------------------------------------------------------*/
-  double dummy() const 
+  inline double dummy() const 
   { return dummy_; }
 
-  double dummy_fixed() const 
+  inline double dummy_fixed() const 
   { return dummy_fixed_; }
 
 
@@ -72,7 +71,7 @@ constexpr double INCOMFLOW_MIN    = DBL_MIN;
 /*********************************************************************
 * Helpful functions
 *********************************************************************/
-void TERMINATE()
+inline void TERMINATE()
 {
   LOG(ERROR) << "TERMINATE PROGRAM \n";
   std::exit(EXIT_FAILURE);

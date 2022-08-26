@@ -14,8 +14,6 @@
 
 #include "Log.h"
 
-#include "Matrix.h"
-
 #include "PrimaryGrid.h"
 #include "solver_utils.h"
 

@@ -43,6 +43,11 @@ int run_tests(const std::string& test_case)
     LOG(INFO) << "  Running tests for \"PrimaryGrid\" class...";
     run_tests_PrimaryGrid();
   }
+  else if ( !test_case.compare("DualGrid") )
+  {
+    LOG(INFO) << "  Running tests for \"DualGrid\" class...";
+    run_tests_DualGrid();
+  }
   else
   {
     LOG(INFO) << "";

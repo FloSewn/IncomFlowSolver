@@ -23,21 +23,20 @@ namespace PrimaryGridTests
 using namespace CppUtils;
 using namespace IncomFlow::Solver;
 
+std::string BASE_DIR { INCOMFLOW_SOURCE_DIR };
+
 /*********************************************************************
 *
 *********************************************************************/
 void read_grid()
 {
-  // Set logging output file
-  std::string base_dir { INCOMFLOW_SOURCE_DIR };
-  std::string log_file_path 
-  { base_dir + "/aux/test_logs/PrimaryGrid.read_grid.log" };
-  LOG_PROPERTIES.set_info_ostream( TO_FILE, log_file_path );
-  LOG_PROPERTIES.set_debug_ostream( TO_FILE, log_file_path );
+  LOG(INFO) << "";
+  LOG(INFO) << "========== Test: read_grid() ==========";
+  LOG(INFO) << "";
 
   // Read the grid
   std::string grid_file_path 
-  { base_dir + "/aux/test_data/TestGrid.dat" };
+  { BASE_DIR + "/aux/test_data/TestGrid.dat" };
 
   PrimaryGridReader grid_reader {};
 
@@ -107,6 +106,12 @@ void read_grid()
 *********************************************************************/
 void run_tests_PrimaryGrid()
 {
+  // Set logging output file
+  std::string log_file_path 
+  { PrimaryGridTests::BASE_DIR + "/aux/test_logs/tests_PrimaryGrid.log" };
+  CppUtils::LOG_PROPERTIES.set_info_ostream( CppUtils::TO_FILE, log_file_path );
+  CppUtils::LOG_PROPERTIES.set_debug_ostream( CppUtils::TO_FILE, log_file_path );
+
   PrimaryGridTests::read_grid();
 
   // Reset logging ostream

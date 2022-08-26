@@ -12,7 +12,7 @@
 
 #include "Log.h"
 
-#include "Matrix.h"
+#include "definitions.h"
 
 namespace IncomFlow {
 namespace Solver {
@@ -112,62 +112,62 @@ public:
   int n_bdry_edges() const { return n_bdry_edges_; }
 
 
-  Matrix<double>& vertex_coords() { return vertex_coords_; }
-  const Matrix<double>& vertex_coords() const { return vertex_coords_; }
+  DMat& vertex_coords() { return vertex_coords_; }
+  const DMat& vertex_coords() const { return vertex_coords_; }
 
-  Matrix<int>& tris() { return tris_; }
-  const Matrix<int>& tris() const { return tris_; }
+  IMat& tris() { return tris_; }
+  const IMat& tris() const { return tris_; }
 
-  Matrix<int>& quads() { return quads_; }
-  const Matrix<int>& quads() const { return quads_; }
+  IMat& quads() { return quads_; }
+  const IMat& quads() const { return quads_; }
 
-  Matrix<int>& tri_neighbors() { return tri_neighbors_; }
-  const Matrix<int>& tri_neighbors() const { return tri_neighbors_; }
+  IMat& tri_neighbors() { return tri_neighbors_; }
+  const IMat& tri_neighbors() const { return tri_neighbors_; }
 
-  Matrix<int>& quad_neighbors() { return quad_neighbors_; }
-  const Matrix<int>& quad_neighbors() const { return quad_neighbors_; }
+  IMat& quad_neighbors() { return quad_neighbors_; }
+  const IMat& quad_neighbors() const { return quad_neighbors_; }
 
-  Matrix<int>& intr_edges() { return intr_edges_; }
-  const Matrix<int>& intr_edges() const { return intr_edges_; }
+  IMat& intr_edges() { return intr_edges_; }
+  const IMat& intr_edges() const { return intr_edges_; }
 
-  Matrix<int>& bdry_edges() { return bdry_edges_; }
-  const Matrix<int>& bdry_edges() const { return bdry_edges_; }
+  IMat& bdry_edges() { return bdry_edges_; }
+  const IMat& bdry_edges() const { return bdry_edges_; }
 
-  Matrix<int>& intr_edge_neighbors() { return intr_edge_neighbors_; }
-  const Matrix<int>& intr_edge_neighbors() const { return intr_edge_neighbors_; }
+  IMat& intr_edge_neighbors() { return intr_edge_neighbors_; }
+  const IMat& intr_edge_neighbors() const { return intr_edge_neighbors_; }
 
-  std::vector<int>& bdry_edge_neighbors() { return bdry_edge_neighbors_; }
-  const std::vector<int>& bdry_edge_neighbors() const { return bdry_edge_neighbors_; }
+  IVec& bdry_edge_neighbors() { return bdry_edge_neighbors_; }
+  const IVec& bdry_edge_neighbors() const { return bdry_edge_neighbors_; }
 
-  std::vector<int>& bdry_edge_markers() { return bdry_edge_markers_; }
-  const std::vector<int>& bdry_edge_markers() const { return bdry_edge_markers_; }
+  IVec& bdry_edge_markers() { return bdry_edge_markers_; }
+  const IVec& bdry_edge_markers() const { return bdry_edge_markers_; }
 
 
 protected:
   /*------------------------------------------------------------------
   | Attributes
   ------------------------------------------------------------------*/
-  int n_vertices_   { 0 };
-  int n_tris_       { 0 };
-  int n_quads_      { 0 };
-  int n_intr_edges_ { 0 };
-  int n_bdry_edges_ { 0 };
+  int  n_vertices_   { 0 };
+  int  n_tris_       { 0 };
+  int  n_quads_      { 0 };
+  int  n_intr_edges_ { 0 };
+  int  n_bdry_edges_ { 0 };
 
-  Matrix <double>  vertex_coords_;
+  DMat vertex_coords_;
 
-  Matrix<int>      tris_;
-  Matrix<int>      quads_;
+  IMat tris_;
+  IMat quads_;
 
-  Matrix<int>      tri_neighbors_;
-  Matrix<int>      quad_neighbors_;
+  IMat tri_neighbors_;
+  IMat quad_neighbors_;
 
-  Matrix<int>      intr_edges_;
-  Matrix<int>      bdry_edges_;
+  IMat intr_edges_;
+  IMat bdry_edges_;
 
-  Matrix<int>      intr_edge_neighbors_;
-  std::vector<int> bdry_edge_neighbors_;
+  IMat intr_edge_neighbors_;
+  IVec bdry_edge_neighbors_;
 
-  std::vector<int> bdry_edge_markers_;
+  IVec bdry_edge_markers_;
 
 };
 

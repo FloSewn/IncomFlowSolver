@@ -35,3 +35,4 @@ add_subdirectory( src/tests )
 enable_testing()
 
 add_test(NAME PrimaryGrid COMMAND ${CMAKE_SOURCE_DIR}/bin/run_tests "PrimaryGrid")
+add_test(NAME DualGrid COMMAND ${CMAKE_SOURCE_DIR}/bin/run_tests "DualGrid")
