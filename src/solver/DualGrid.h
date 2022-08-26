@@ -41,6 +41,31 @@ public:
   , boundaries_     { pg, bd }
   {}
 
+  /*------------------------------------------------------------------
+  | Getters
+  ------------------------------------------------------------------*/
+  int n_elements() { return n_elements_; }
+  int n_elements() const { return n_elements_; }
+
+  int n_intr_faces() { return n_intr_faces_; }
+  int n_intr_faces() const { return n_intr_faces_; }
+
+  DMat& coords() { return coords_; }
+  const DMat& coords() const { return coords_; }
+
+  DMat& face_normals() { return face_normals_; }
+  const DMat& face_normals() const { return face_normals_; }
+
+  IMat& face_neighbors() { return face_neighbors_; }
+  const IMat& face_neighbors() const { return face_neighbors_; }
+
+  DVec& volumes() { return volumes_; }
+  const DVec& volumes() const { return volumes_; }
+
+  BoundaryList& boundaries() { return boundaries_; }
+  const BoundaryList& boundaries() const { return boundaries_; }
+
+
 private:
   /*------------------------------------------------------------------
   | Attributes

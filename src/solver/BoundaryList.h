@@ -34,6 +34,12 @@ public:
   using iterator       = typename BoundaryVector::iterator;
   using const_iterator = typename BoundaryVector::const_iterator;
 
+  iterator begin() { return boundaries_.begin(); }
+  iterator end() { return boundaries_.end(); }
+
+  const_iterator begin() const { return boundaries_.begin(); }
+  const_iterator end() const { return boundaries_.end(); }
+
   /*------------------------------------------------------------------
   | Constructor
   ------------------------------------------------------------------*/
@@ -46,7 +52,7 @@ public:
     {
       int marker    = key_val.first;
       BdryType type = key_val.second;
-      //boundaries_.push_back( { pgrid, marker, type } );
+      boundaries_.push_back( { pgrid, marker, type } );
     }
   }
 
