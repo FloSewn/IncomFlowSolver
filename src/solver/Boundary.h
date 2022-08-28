@@ -222,12 +222,6 @@ private:
       dual_normals_[i1][1] += ny;
     }
 
-    std::cout << "BOUNDARY: " << marker_ << std::endl;
-    for ( int i_elem = 0; i_elem < n_dual_elements_; ++i_elem )
-      std::cout << dual_elements_[i_elem] << " - ("
-        << dual_normals_[i_elem][0] << ", " 
-        << dual_normals_[i_elem][1] << ")\n"; 
-    std::cout << "-----------------\n\n";
 
   } // compute_normals()
 

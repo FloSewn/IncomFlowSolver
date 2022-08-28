@@ -14,6 +14,7 @@
 #include "tests.h"
 
 #include "Testing.h"
+#include "MathUtility.h"
 
 #include "PrimaryGrid.h"
 #include "PrimaryGridReader.h"
@@ -32,10 +33,10 @@ std::string BASE_DIR { INCOMFLOW_SOURCE_DIR };
 /*********************************************************************
 *
 *********************************************************************/
-void boundaries()
+void metrics()
 {
   LOG(INFO) << "";
-  LOG(INFO) << "========== Test: boundaries() ==========";
+  LOG(INFO) << "========== Test: metrics() ==========";
   LOG(INFO) << "";
 
   BoundaryDef bdry_def {};
@@ -116,6 +117,21 @@ void boundaries()
       CHECK( bdry.prim_edges()[2][1] == 3 );
       CHECK( bdry.prim_edges()[3][0] == 3 );
       CHECK( bdry.prim_edges()[3][1] == 4 );
+
+      CHECK( EQ(bdry.dual_normals()[0][1], 0.125) );
+      CHECK( EQ(bdry.dual_normals()[0][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[1][1], 0.250) );
+      CHECK( EQ(bdry.dual_normals()[1][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[2][1], 0.250) );
+      CHECK( EQ(bdry.dual_normals()[2][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[3][1], 0.250) );
+      CHECK( EQ(bdry.dual_normals()[3][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[4][1], 0.125) );
+      CHECK( EQ(bdry.dual_normals()[4][0], 0.000) );
     }
 
     if ( bdry.marker() == 2 )
@@ -138,6 +154,22 @@ void boundaries()
       CHECK( bdry.prim_edges()[2][1] == 7 );
       CHECK( bdry.prim_edges()[3][0] == 7 );
       CHECK( bdry.prim_edges()[3][1] == 8 );
+
+      CHECK( EQ(bdry.dual_normals()[0][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[0][0],-0.125) );
+
+      CHECK( EQ(bdry.dual_normals()[1][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[1][0],-0.250) );
+
+      CHECK( EQ(bdry.dual_normals()[2][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[2][0],-0.250) );
+
+      CHECK( EQ(bdry.dual_normals()[3][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[3][0],-0.250) );
+
+      CHECK( EQ(bdry.dual_normals()[4][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[4][0],-0.125) );
+
     }
 
     if ( bdry.marker() == 3 )
@@ -160,6 +192,21 @@ void boundaries()
       CHECK( bdry.prim_edges()[2][1] == 11);
       CHECK( bdry.prim_edges()[3][0] == 11);
       CHECK( bdry.prim_edges()[3][1] == 12);
+
+      CHECK( EQ(bdry.dual_normals()[0][1],-0.125) );
+      CHECK( EQ(bdry.dual_normals()[0][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[1][1],-0.250) );
+      CHECK( EQ(bdry.dual_normals()[1][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[2][1],-0.250) );
+      CHECK( EQ(bdry.dual_normals()[2][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[3][1],-0.250) );
+      CHECK( EQ(bdry.dual_normals()[3][0], 0.000) );
+
+      CHECK( EQ(bdry.dual_normals()[4][1],-0.125) );
+      CHECK( EQ(bdry.dual_normals()[4][0], 0.000) );
     }
 
     if ( bdry.marker() == 4 )
@@ -182,11 +229,74 @@ void boundaries()
       CHECK( bdry.prim_edges()[2][1] == 15);
       CHECK( bdry.prim_edges()[3][0] == 15);
       CHECK( bdry.prim_edges()[3][1] ==  0);
+
+      CHECK( EQ(bdry.dual_normals()[0][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[0][0], 0.125) );
+
+      CHECK( EQ(bdry.dual_normals()[1][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[1][0], 0.125) );
+
+      CHECK( EQ(bdry.dual_normals()[2][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[2][0], 0.250) );
+
+      CHECK( EQ(bdry.dual_normals()[3][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[3][0], 0.250) );
+
+      CHECK( EQ(bdry.dual_normals()[4][1], 0.000) );
+      CHECK( EQ(bdry.dual_normals()[4][0], 0.250) );
+    }
+  }
+
+  // -----------------------------------------------------------------
+  // Test dual grid volume 
+  const DVec& volumes = dualgrid.volumes();
+  double total_volume = 0.0;
+
+  for ( int i_elem = 0; i_elem < dualgrid.n_elements(); ++i_elem )
+    total_volume += volumes[i_elem];
+
+  CHECK( EQ(total_volume, 1.0) );
+
+  // -----------------------------------------------------------------
+  // Test dual grid normals 
+  const IMat& face_neighbors = dualgrid.face_neighbors();
+  const DMat& face_normals   = dualgrid.face_normals();
+
+  for ( int i_face = 0; i_face < dualgrid.n_faces(); ++i_face )
+  {
+    const int p0 = face_neighbors[i_face][0];
+    const int p1 = face_neighbors[i_face][1];
+
+    CHECK( !( p0 == 23 && p1 == 19 ) );
+
+    if ( p0 == 19 && p1 == 23 )
+    {
+      CHECK( EQ(face_normals[i_face][0], -1./6.) );
+      CHECK( EQ(face_normals[i_face][1],     0.) );
+    }
+
+
+    CHECK( !( p0 == 17 && p1 == 2 ) );
+
+    if ( p0 == 2 && p1 == 17 )
+    {
+      CHECK( EQ(face_normals[i_face][0],    0.) );
+      CHECK( EQ(face_normals[i_face][1], 1./4.) );
+    }
+
+
+    CHECK( !( p0 == 2 && p1 == 1 ) );
+
+    if ( p0 == 1 && p1 == 2 )
+    {
+      CHECK( EQ(face_normals[i_face][0], 1./8.) );
+      CHECK( EQ(face_normals[i_face][1],    0.) );
     }
 
   }
 
-} // boundaries()
+
+} // metrics()
 
 } // namespace DualGridTests
 
@@ -202,7 +312,7 @@ void run_tests_DualGrid()
   CppUtils::LOG_PROPERTIES.set_info_ostream( CppUtils::TO_FILE, log_file_path );
   CppUtils::LOG_PROPERTIES.set_debug_ostream( CppUtils::TO_FILE, log_file_path );
 
-  DualGridTests::boundaries();
+  DualGridTests::metrics();
 
   // Reset logging ostream
   CppUtils::LOG_PROPERTIES.set_info_ostream( CppUtils::TO_COUT );
